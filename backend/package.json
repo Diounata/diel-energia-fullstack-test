@@ -15,5 +15,8 @@
     "globals": "^15.1.0",
     "typescript-eslint": "^7.7.1",
     "vitest": "^1.5.2"
+  },
+  "dependencies": {
+    "date-fns": "^3.6.0"
   }
 }
