@@ -19,12 +19,16 @@ describe('Update Task', async () => {
     endsAt,
   })
 
-  it('should be able to update an existent task', async () => {
-    const updateTask = new UpdateTask(tasksRepository)
+  const updateTask = new UpdateTask(tasksRepository)
 
+  it('should be able to update an existent task', async () => {
     const res = await updateTask.handle({ id: '1', title: 'Updated title' })
 
     expect(res).toBeInstanceOf(Task)
     expect(res.title).toBe('Updated title')
+  })
+
+  it('should not be able to update an unexistent tasks', async () => {
+    expect(updateTask.handle({ id: '2', title: 'This task does not exist' })).rejects.toThrow('Updating task not found')
   })
 })

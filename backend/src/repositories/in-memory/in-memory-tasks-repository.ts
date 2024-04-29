@@ -11,14 +11,13 @@ export class InMemoryTasksRepository implements TasksRepository {
   }
 
   async update(task: Partial<TaskProps> & { id: string }) {
-    let updatingTask = this.items.find(currentTask => currentTask.id === task.id)
+    let updatingTaskIndex = this.items.findIndex(currentTask => currentTask.id === task.id)
 
-    if (!updatingTask) throw new Error('Updating task not found')
+    if (updatingTaskIndex === -1) throw new Error('Updating task not found')
 
-    updatingTask.setProps(task)
-    this.items = this.items.map(task => (task.id === updatingTask.id ? updatingTask : task))
+    this.items[updatingTaskIndex].setProps(task)
 
-    return updatingTask
+    return this.items[updatingTaskIndex]
   }
 
   async delete(id: string) {
