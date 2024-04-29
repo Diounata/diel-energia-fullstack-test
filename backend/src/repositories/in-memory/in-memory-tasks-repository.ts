@@ -1,31 +1,47 @@
+import { add } from 'date-fns'
 import { Task, TaskProps } from '../../entities/task'
 import { TasksRepository } from '../tasks-repository'
 
 export class InMemoryTasksRepository implements TasksRepository {
-  items: Task[] = []
+  public items: Map<string, Task> = new Map()
+
+  constructor() {
+    this.items.set(
+      '1',
+      new Task({
+        id: '1',
+        title: 'Title',
+        description: 'Description',
+        startsAt: new Date(),
+        endsAt: add(new Date(), { hours: 1 }),
+      })
+    )
+  }
 
   async create(task: Task) {
-    this.items.push(task)
+    const hasOverlappingId = this.items.get(task.id)
+
+    if (hasOverlappingId) throw new Error('There is an added task id conflicting with current task id')
+
+    this.items.set(task.id, task)
 
     return task
   }
 
   async update(task: Partial<TaskProps> & { id: string }) {
-    let updatingTaskIndex = this.items.findIndex(currentTask => currentTask.id === task.id)
+    let updatingTask = this.items.get(task.id)
 
-    if (updatingTaskIndex === -1) throw new Error('Updating task not found')
+    if (!updatingTask) throw new Error('Updating task not found')
 
-    this.items[updatingTaskIndex].setProps(task)
+    updatingTask.setProps(task)
 
-    return this.items[updatingTaskIndex]
+    return updatingTask
   }
 
   async delete(id: string) {
-    let hasFound = false
+    const wasDeleted = this.items.delete(id)
 
-    this.items = this.items.filter(task => (task.id !== id ? true : (hasFound = true)))
-
-    if (!hasFound) throw new Error('Deleting Task not found')
+    if (!wasDeleted) throw new Error('Deleting Task not found')
 
     return id
   }
