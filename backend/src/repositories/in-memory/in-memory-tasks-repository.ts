@@ -21,7 +21,11 @@ export class InMemoryTasksRepository implements TasksRepository {
   }
 
   async delete(id: string) {
-    this.items.filter(task => task.id !== id)
+    let hasFound = false
+
+    this.items = this.items.filter(task => (task.id !== id ? true : (hasFound = true)))
+
+    if (!hasFound) throw new Error('Deleting Task not found')
 
     return id
   }
