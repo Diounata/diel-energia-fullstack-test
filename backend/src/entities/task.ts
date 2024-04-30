@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid'
+
 export interface TaskProps {
   id: string
   title: string
@@ -9,12 +11,12 @@ export interface TaskProps {
 export class Task {
   private props: TaskProps
 
-  constructor(props: TaskProps) {
+  constructor(props: Omit<TaskProps, 'id'>, id?: string) {
     const { startsAt, endsAt } = props
 
     if (endsAt <= startsAt) throw new Error('End date must not be before start date')
 
-    this.props = props
+    this.props = { ...props, id: id ?? uuid() }
   }
 
   setProps(props: Partial<TaskProps>) {

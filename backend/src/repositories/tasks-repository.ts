@@ -2,16 +2,18 @@ import { prismaClient } from '../database/prismaClient'
 import { Task, TaskProps } from '../entities/task'
 
 export interface ITasksRepository {
-  create(task: Task): Promise<Task>
+  create(task: Task): Promise<string>
   update(task: Partial<TaskProps> & { id: string }): Promise<Task>
   delete(id: string): Promise<string>
 }
 
 export class TasksRepository implements ITasksRepository {
-  async create(task: Task): Promise<Task> {
-    const res = await prismaClient.task.create({ data: task })
+  async create(task: Task): Promise<string> {
+    const { title, description, startsAt, endsAt } = task
 
-    return new Task(res)
+    const { id } = await prismaClient.task.create({ data: { title, description, startsAt, endsAt } })
+
+    return id
   }
 
   async update(task: Partial<TaskProps> & { id: string }): Promise<Task> {

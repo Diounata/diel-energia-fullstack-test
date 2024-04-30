@@ -8,13 +8,15 @@ export class InMemoryTasksRepository implements ITasksRepository {
   constructor() {
     this.items.set(
       '1',
-      new Task({
-        id: '1',
-        title: 'Title',
-        description: 'Description',
-        startsAt: new Date(),
-        endsAt: add(new Date(), { hours: 1 }),
-      })
+      new Task(
+        {
+          title: 'Title',
+          description: 'Description',
+          startsAt: new Date(),
+          endsAt: add(new Date(), { hours: 1 }),
+        },
+        '1'
+      )
     )
   }
 
@@ -25,7 +27,7 @@ export class InMemoryTasksRepository implements ITasksRepository {
 
     this.items.set(task.id, task)
 
-    return task
+    return task.id
   }
 
   async update(task: Partial<TaskProps> & { id: string }) {

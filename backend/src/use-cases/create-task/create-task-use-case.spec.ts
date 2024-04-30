@@ -1,12 +1,11 @@
 import { add } from 'date-fns'
 import { describe, it, expect } from 'vitest'
-import { CreateTask } from './create-task'
-import { InMemoryTasksRepository } from '../repositories/in-memory/in-memory-tasks-repository'
-import { Task } from '../entities/task'
+import { CreateTaskUseCase } from './create-task-use-case'
+import { InMemoryTasksRepository } from '../../repositories/in-memory/in-memory-tasks-repository'
 
 describe('Create Task', () => {
   const tasksRepository = new InMemoryTasksRepository()
-  const createTask = new CreateTask(tasksRepository)
+  const createTask = new CreateTaskUseCase(tasksRepository)
 
   const startsAt = new Date()
   const endsAt = add(startsAt, { hours: 1 })
@@ -20,7 +19,7 @@ describe('Create Task', () => {
         startsAt,
         endsAt,
       })
-    ).resolves.toBeInstanceOf(Task)
+    ).resolves.toBe('2')
   })
 
   it('should not be able to create a task with an existing task containg the same id', () => {
