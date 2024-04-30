@@ -1,8 +1,8 @@
 import { add } from 'date-fns'
 import { Task, TaskProps } from '../../entities/task'
-import { TasksRepository } from '../tasks-repository'
+import { ITasksRepository } from '../tasks-repository'
 
-export class InMemoryTasksRepository implements TasksRepository {
+export class InMemoryTasksRepository implements ITasksRepository {
   public items: Map<string, Task> = new Map()
 
   constructor() {

@@ -13,10 +13,12 @@
     "@eslint/js": "^9.1.1",
     "eslint": "^8.57.0",
     "globals": "^15.1.0",
+    "prisma": "^5.13.0",
     "typescript-eslint": "^7.7.1",
     "vitest": "^1.5.2"
   },
   "dependencies": {
+    "@prisma/client": "^5.13.0",
     "date-fns": "^3.6.0"
   }
 }
