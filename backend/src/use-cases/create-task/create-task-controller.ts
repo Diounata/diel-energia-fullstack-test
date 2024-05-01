@@ -1,3 +1,4 @@
+import { Prisma } from '@prisma/client'
 import { z } from 'zod'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { CreateTaskUseCase } from './create-task-use-case'
@@ -25,9 +26,16 @@ export class CreateTaskController {
       })
 
       return reply.status(201).send(id)
-    } catch (err) {
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        return reply.status(400).send({
+          error: e.meta?.cause || 'Unexpected error',
+          code: 'database_error',
+        })
+      }
+
       return reply.status(400).send({
-        message: err || 'Unexpected error',
+        message: e || 'Unexpected error',
       })
     }
   }

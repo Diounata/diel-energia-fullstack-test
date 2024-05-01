@@ -2,6 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import { UpdateTaskUseCase } from './update-task-use-case'
 import { UpdateTaskDTO } from './update-task-dto'
 import { z } from 'zod'
+import { Prisma } from '@prisma/client'
 
 export class UpdateTaskController {
   constructor(private updateTaskUseCase: UpdateTaskUseCase) {}
@@ -21,9 +22,16 @@ export class UpdateTaskController {
       const res = await this.updateTaskUseCase.handle({ id, ...updatingData })
 
       return reply.status(201).send(res.id)
-    } catch (err) {
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        return reply.status(400).send({
+          error: e.meta?.cause || 'Unexpected error',
+          code: 'database_error',
+        })
+      }
+
       return reply.status(400).send({
-        message: 'Unexpected error',
+        message: e || 'Unexpected error',
       })
     }
   }
