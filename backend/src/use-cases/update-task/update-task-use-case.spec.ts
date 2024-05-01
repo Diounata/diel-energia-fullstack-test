@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest'
-import { InMemoryTasksRepository } from '../repositories/in-memory/in-memory-tasks-repository'
-import { Task } from '../entities/task'
-import { UpdateTask } from './update-task'
+import { InMemoryTasksRepository } from '../../repositories/in-memory/in-memory-tasks-repository'
+import { Task } from '../../entities/task'
+import { UpdateTaskUseCase } from './update-task-use-case'
 
 describe('Update Task', async () => {
   const tasksRepository = new InMemoryTasksRepository()
-  const updateTask = new UpdateTask(tasksRepository)
+  const updateTask = new UpdateTaskUseCase(tasksRepository)
 
   it('should be able to update an existent task', async () => {
     const res = await updateTask.handle({ id: '1', title: 'Updated title' })

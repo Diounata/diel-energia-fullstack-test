@@ -3,7 +3,7 @@ import { Task, TaskProps } from '../entities/task'
 
 export interface ITasksRepository {
   create(task: Task): Promise<string>
-  update(task: Partial<TaskProps> & { id: string }): Promise<Task>
+  update(task: Partial<TaskProps> & { id: string }): Promise<TaskProps>
   delete(id: string): Promise<string>
 }
 
@@ -16,10 +16,10 @@ export class TasksRepository implements ITasksRepository {
     return id
   }
 
-  async update(task: Partial<TaskProps> & { id: string }): Promise<Task> {
+  async update(task: Partial<TaskProps> & { id: string }): Promise<TaskProps> {
     const res = await prismaClient.task.update({ data: task, where: { id: task.id } })
 
-    return new Task(res)
+    return res
   }
 
   async delete(id: string): Promise<string> {
