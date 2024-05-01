@@ -1,6 +1,6 @@
-import { TasksRepository } from '../repositories/tasks-repository'
+import { TasksRepository } from '../../repositories/tasks-repository'
 
-export class DeleteTask {
+export class DeleteTaskUseCase {
   constructor(private tasksRepository: TasksRepository) {}
 
   async handle(id: string): Promise<string> {
