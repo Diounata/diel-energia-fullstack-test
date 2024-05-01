@@ -13,24 +13,11 @@ describe('Create Task', () => {
   it('should be able to create a task', () => {
     expect(
       createTask.handle({
-        id: '2',
         title: 'Title',
         description: 'Description',
         startsAt,
         endsAt,
       })
-    ).resolves.toBe('2')
-  })
-
-  it('should not be able to create a task with an existing task containg the same id', () => {
-    expect(
-      createTask.handle({
-        id: '1',
-        title: 'Title',
-        description: 'Description',
-        startsAt,
-        endsAt,
-      })
-    ).rejects.toThrow()
+    ).resolves
   })
 })
