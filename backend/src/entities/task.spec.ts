@@ -9,7 +9,6 @@ describe('Instantiate task class', () => {
     const endsAt = add(startsAt, { hours: 1 })
 
     const task = new Task({
-      id: '1',
       title: 'Title',
       description: 'Description',
       startsAt,
@@ -25,7 +24,6 @@ describe('Instantiate task class', () => {
 
     expect(() => {
       return new Task({
-        id: '1',
         title: 'Title',
         description: 'Description',
         startsAt,

@@ -14,7 +14,7 @@ export class Task {
   constructor(props: Omit<TaskProps, 'id'>, id?: string) {
     const { startsAt, endsAt } = props
 
-    if (endsAt <= startsAt) throw new Error('End date must not be before start date')
+    if (endsAt < startsAt) throw new Error('End date must not be before start date')
 
     this.props = { ...props, id: id ?? uuid() }
   }

@@ -1,4 +1,4 @@
-import { add } from 'date-fns'
+import { add, isWithinInterval, set, startOfDay } from 'date-fns'
 import { Task, TaskProps } from '../../entities/task'
 import { ITasksRepository } from '../tasks-repository'
 
@@ -6,18 +6,38 @@ export class InMemoryTasksRepository implements ITasksRepository {
   public items: Map<string, Task> = new Map()
 
   constructor() {
+    const startsAt = new Date('2024-01-01T00:00:00Z')
+    const endsAt = add(startsAt, { hours: 1 })
+
     this.items.set(
       '1',
       new Task(
         {
           title: 'Title',
           description: 'Description',
-          startsAt: new Date(),
-          endsAt: add(new Date(), { hours: 1 }),
+          startsAt,
+          endsAt,
         },
         '1'
       )
     )
+  }
+
+  async getAllByMonth(date: Date): Promise<TaskProps[]> {
+    const startDate = set(date, { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 })
+    const endDate = add(startDate, { months: 1 })
+
+    const tasks: TaskProps[] = []
+    this.items.forEach(task => {
+      const isTaskWithinInterval = isWithinInterval(new Date(task.startsAt), {
+        start: startDate,
+        end: endDate,
+      })
+
+      if (isTaskWithinInterval) tasks.push(task)
+    })
+
+    return tasks
   }
 
   async create(task: Task) {
@@ -30,14 +50,16 @@ export class InMemoryTasksRepository implements ITasksRepository {
     return task.id
   }
 
-  async update(task: Partial<TaskProps> & { id: string }) {
+  async update(task: Partial<TaskProps> & { id: string }): Promise<TaskProps> {
     let updatingTask = this.items.get(task.id)
 
     if (!updatingTask) throw new Error('Updating task not found')
 
     updatingTask.setProps(task)
 
-    return updatingTask
+    const { id, title, description, startsAt, endsAt } = updatingTask
+
+    return { id, title, description, startsAt, endsAt }
   }
 
   async delete(id: string) {
