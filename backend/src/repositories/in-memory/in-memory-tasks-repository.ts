@@ -23,21 +23,8 @@ export class InMemoryTasksRepository implements ITasksRepository {
     )
   }
 
-  async getAllByMonth(date: Date): Promise<TaskProps[]> {
-    const startDate = set(date, { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 })
-    const endDate = add(startDate, { months: 1 })
-
-    const tasks: TaskProps[] = []
-    this.items.forEach(task => {
-      const isTaskWithinInterval = isWithinInterval(new Date(task.startsAt), {
-        start: startDate,
-        end: endDate,
-      })
-
-      if (isTaskWithinInterval) tasks.push(task)
-    })
-
-    return tasks
+  async getAll(): Promise<TaskProps[]> {
+    return Array.from(this.items).map(item => item[1])
   }
 
   async create(task: Task) {

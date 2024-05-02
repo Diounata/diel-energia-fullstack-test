@@ -1,19 +1,13 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { GetTasksByMonthUseCase } from './get-tasks-by-month-use-case'
-import { GetTasksByMonthDTO } from './get-tasks-by-month-dto'
+import { GetTasksUseCase } from './get-tasks-use-case'
 import { Prisma } from '@prisma/client'
-import { z } from 'zod'
 
-export class GetTasksByMonthController {
-  constructor(private getTasksByMonthUseCase: GetTasksByMonthUseCase) {}
+export class GetTasksController {
+  constructor(private getTasksBUseCase: GetTasksUseCase) {}
 
   async handle(req: FastifyRequest, reply: FastifyReply) {
-    const { date } = req.query as GetTasksByMonthDTO
-
     try {
-      z.object({ date: z.string().datetime() }).parse(req.query)
-
-      const tasks = await this.getTasksByMonthUseCase.handle(new Date(date))
+      const tasks = await this.getTasksBUseCase.handle()
 
       reply.status(200).send(tasks)
     } catch (e) {
