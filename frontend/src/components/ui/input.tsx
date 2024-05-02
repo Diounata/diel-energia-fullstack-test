@@ -17,9 +17,11 @@ export function Input({ label, name, mask, ...props }: Props) {
 
   return (
     <div>
-      <label htmlFor={name} className={`block mb-2 text-base font-medium ${error && 'text-red-700'}`}>
-        {label}
-      </label>
+      {label ? (
+        <label htmlFor={name} className={`block mb-2 text-base font-medium ${error && 'text-red-700'}`}>
+          {label}
+        </label>
+      ) : null}
 
       <input
         type="text"

@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 
-import { useTasks } from '../contexts/tasks-context'
+import { useTasks } from '../../contexts/tasks-context'
 import { useSearchParamsManager } from '@/lib/hooks/useSearchParams'
 
 interface Props {

@@ -4,13 +4,13 @@ import { useCallback, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
-import { useTasks } from '../contexts/tasks-context'
+import { useTasks } from '../../contexts/tasks-context'
 import { useSearchParamsManager } from '@/lib/hooks/useSearchParams'
 
-import { taskSchema } from '../validators/task'
+import { taskSchema } from '../../validators/task'
 
-import type { FormInput } from '../validators/task'
-import type { Task } from '../types/task'
+import type { FormInput } from '../../validators/task'
+import type { Task } from '../../types/task'
 import type { PartialWithId } from '@/lib/types/partial-with-id'
 
 interface Props {

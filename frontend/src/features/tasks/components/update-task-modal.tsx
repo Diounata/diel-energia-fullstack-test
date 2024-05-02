@@ -3,7 +3,7 @@
 import { Modal } from '@/components/ui/modal'
 import { TaskForm } from './task-form'
 
-import { useUpdateTask } from '../hooks/update'
+import { useUpdateTask } from '../hooks/form/update'
 import { useSearchParamsManager } from '@/lib/hooks/useSearchParams'
 
 export function UpdateTaskModal() {

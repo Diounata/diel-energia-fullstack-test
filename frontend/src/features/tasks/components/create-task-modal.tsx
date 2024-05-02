@@ -3,7 +3,7 @@
 import { Modal } from '@/components/ui/modal'
 import { TaskForm } from './task-form'
 
-import { useCreateTask } from '../hooks/create'
+import { useCreateTask } from '../hooks/form/create'
 import { useSearchParamsManager } from '@/lib/hooks/useSearchParams'
 
 export function CreateTaskModal() {

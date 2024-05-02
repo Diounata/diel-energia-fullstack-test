@@ -8,7 +8,13 @@ import { useSearchParamsManager } from '@/lib/hooks/useSearchParams'
 
 export function TasksTable() {
   const { tasks } = useTasks()
-  const { addSearchParam } = useSearchParamsManager()
+  const { addSearchParam, searchParams } = useSearchParamsManager()
+
+  const titleFilter = searchParams.get('task-title-filter')
+
+  const filteredTasks = titleFilter
+    ? tasks.filter(task => task.title.toLowerCase().startsWith(titleFilter?.toLowerCase() || ''))
+    : tasks
 
   return (
     <table className="bg-white rounded-xl shadow-md w-full task-table">
@@ -24,7 +30,7 @@ export function TasksTable() {
       </thead>
 
       <tbody>
-        {tasks.map((task, index) => (
+        {filteredTasks.map((task, index) => (
           <tr className="px-5 py-7" key={task.id}>
             <td className="flex items-center justify-center opacity-50">{index + 1}</td>
             <td className="flex items-center">{task.title}</td>

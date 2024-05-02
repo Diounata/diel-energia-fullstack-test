@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { TextButton } from '@/components/ui/text-button'
 import { CreateTaskModal } from '@/features/tasks/components/create-task-modal'
 import { DeleteTaskModal } from '@/features/tasks/components/delete-task-modal'
+import { FilterTasksByTitleInput } from '@/features/tasks/components/filter-tasks-by-title-input'
 import { TaskCalendarModal } from '@/features/tasks/components/task-calendar-modal'
 import { TasksTable } from '@/features/tasks/components/tasks-table'
 import { UpdateTaskModal } from '@/features/tasks/components/update-task-modal'
@@ -30,11 +31,12 @@ function Content() {
 
         <div className="flex gap-4">
           <TextButton onClick={() => addSearchParam('modal', 'task-calendar')}>Abrir calendário</TextButton>
+          <FilterTasksByTitleInput />
           <Button onClick={() => addSearchParam('modal', 'create-task')}>+ Novo</Button>
         </div>
       </header>
 
-      <main>
+      <main className="flex flex-col gap-8">
         {tasks.length ? <TasksTable /> : 'Sem tarefas adicionadas'}
 
         <CreateTaskModal />

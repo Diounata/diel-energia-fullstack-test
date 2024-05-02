@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { TextButton } from '@/components/ui/text-button'
 
 import { useSearchParamsManager } from '@/lib/hooks/useSearchParams'
-import { useDeleteTask } from '../hooks/delete'
+import { useDeleteTask } from '../hooks/form/delete'
 
 export function DeleteTaskModal() {
   const { searchParams, removeSearchParam } = useSearchParamsManager()
