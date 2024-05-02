@@ -11,7 +11,7 @@ export function TasksTable() {
   const { addSearchParam } = useSearchParamsManager()
 
   return (
-    <table className="bg-white rounded-xl shadow-md w-full">
+    <table className="bg-white rounded-xl shadow-md w-full task-table">
       <thead>
         <tr className="px-5 py-7 text-lg">
           <th className="text-center opacity-50 font-semibold">#</th>
