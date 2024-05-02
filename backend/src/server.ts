@@ -1,4 +1,5 @@
 import Fastify from 'fastify'
+import cors from '@fastify/cors'
 
 import { getTasksByMonthController } from './use-cases/get-tasks-by-month'
 import { createTaskController } from './use-cases/create-task'
@@ -6,6 +7,8 @@ import { updateTaskController } from './use-cases/update-task'
 import { deleteTaskController } from './use-cases/delete-task'
 
 const fastify = Fastify()
+
+fastify.register(cors, { origin: 'http://localhost:3000' })
 
 fastify.get('/tasks/by-month', (req, reply) => getTasksByMonthController.handle(req, reply))
 fastify.post('/tasks', (req, reply) => createTaskController.handle(req, reply))
