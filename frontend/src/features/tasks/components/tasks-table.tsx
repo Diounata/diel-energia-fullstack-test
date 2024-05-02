@@ -41,7 +41,12 @@ export function TasksTable() {
                 <Image src="/edit.svg" alt="Edit" width={18} height={16} /> Editar
               </TextButton>
 
-              <TextButton>
+              <TextButton
+                onClick={() => {
+                  addSearchParam('modal', 'delete-task')
+                  addSearchParam('id', task.id)
+                }}
+              >
                 <Image src="/trash.svg" alt="Delete" width={14} height={16} /> Deletar
               </TextButton>
             </td>

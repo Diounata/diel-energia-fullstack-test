@@ -10,7 +10,7 @@ export function UpdateTaskModal() {
   const { searchParams, removeSearchParam } = useSearchParamsManager()
   const id = searchParams.get('id')
 
-  const { updateTaskForm, onSubmit } = useUpdateTask({ id: id as string })
+  const { updateTaskForm, onSubmit } = useUpdateTask({ task_id: id as string })
 
   const isUpdatingTask = searchParams.get('modal') === 'update-task'
   const setIsOpen = () => {

@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { CreateTaskModal } from '@/features/tasks/components/create-task-modal'
+import { DeleteTaskModal } from '@/features/tasks/components/delete-task-modal'
 import { TasksTable } from '@/features/tasks/components/tasks-table'
 import { UpdateTaskModal } from '@/features/tasks/components/update-task-modal'
 import { TasksProvider, useTasks } from '@/features/tasks/contexts/tasks-context'
@@ -33,6 +34,7 @@ function Content() {
 
         <CreateTaskModal />
         <UpdateTaskModal />
+        <DeleteTaskModal />
       </main>
     </div>
   )

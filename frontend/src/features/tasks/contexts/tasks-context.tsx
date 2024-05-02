@@ -15,6 +15,7 @@ interface Props {
   getTask(id: string): Task | null
   createTask(task: WithoutId<Task>): Promise<string>
   updateTask(task: PartialWithId<Task>): Promise<string>
+  deleteTask(task_id: string): Promise<string>
 }
 
 const TasksContext = createContext({} as Props)
@@ -75,6 +76,22 @@ export function TasksProvider({ children }: Children) {
     [tasks]
   )
 
+  const deleteTask = useCallback(
+    async (task_id: string) => {
+      try {
+        const id = (await axios.delete<string>('/tasks', { data: { id: task_id } })).data
+
+        setTasks(prevTasks => prevTasks.filter(task => task.id !== id))
+
+        return id
+      } catch (e) {
+        console.log(e)
+        return ''
+      }
+    },
+    [setTasks]
+  )
+
   useEffect(() => {
     toast.promise(getAllTasks(), {
       loading: 'Carregando tarefas...',
@@ -89,8 +106,9 @@ export function TasksProvider({ children }: Children) {
       getTask,
       createTask,
       updateTask,
+      deleteTask,
     }),
-    [tasks, getTask, createTask, updateTask]
+    [tasks, getTask, createTask, updateTask, deleteTask]
   )
 
   return <TasksContext.Provider value={value}>{children}</TasksContext.Provider>

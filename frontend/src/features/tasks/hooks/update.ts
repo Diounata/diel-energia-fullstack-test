@@ -14,10 +14,10 @@ import type { Task } from '../types/task'
 import type { PartialWithId } from '@/lib/types/partial-with-id'
 
 interface Props {
-  id: string
+  task_id: string
 }
 
-export function useUpdateTask({ id }: Props) {
+export function useUpdateTask({ task_id }: Props) {
   const { getTask, updateTask } = useTasks()
   const { removeSearchParam } = useSearchParamsManager()
 
@@ -27,7 +27,7 @@ export function useUpdateTask({ id }: Props) {
 
   const onSubmit: SubmitHandler<FormInput> = useCallback(
     async data => {
-      const task: PartialWithId<Task> = { id, ...data }
+      const task: PartialWithId<Task> = { id: task_id, ...data }
 
       const updateTaskPromise = updateTask(task)
 
@@ -40,11 +40,11 @@ export function useUpdateTask({ id }: Props) {
       removeSearchParam('modal')
       updateTaskForm.reset()
     },
-    [id, updateTask, removeSearchParam, updateTaskForm]
+    [task_id, updateTask, removeSearchParam, updateTaskForm]
   )
 
   useEffect(() => {
-    const task = getTask(id)
+    const task = getTask(task_id)
 
     if (!task) {
       removeSearchParam('modal')
@@ -59,7 +59,7 @@ export function useUpdateTask({ id }: Props) {
       startsAt: format(new Date(startsAt), "yyyy-MM-dd'T'HH:mm"),
       endsAt: format(new Date(endsAt), "yyyy-MM-dd'T'HH:mm"),
     })
-  }, [id])
+  }, [task_id])
 
   return {
     updateTaskForm,
