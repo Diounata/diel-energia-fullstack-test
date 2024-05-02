@@ -1,4 +1,4 @@
-import { ChangeEvent, InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 interface Props extends InputHTMLAttributes<any> {
@@ -32,7 +32,7 @@ export function Input({ label, name, mask, ...props }: Props) {
         {...props}
       />
 
-      {error ? <p className="mt-2 text-base text-red-600 ">{error.message?.toString() ?? ''}</p> : null}
+      {error ? <p className="mt-2 text-sm text-red-600 ">{error.message?.toString() ?? ''}</p> : null}
     </div>
   )
 }

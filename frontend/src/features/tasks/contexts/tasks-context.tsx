@@ -25,7 +25,7 @@ export function TasksProvider({ children }: Children) {
 
   const getAllTasks = useCallback(async () => {
     try {
-      const tasks = (await axios.get<Task[]>('/tasks')).data
+      const { data: tasks } = await axios.get<Task[]>('/tasks')
 
       setTasks(tasks)
     } catch (e) {

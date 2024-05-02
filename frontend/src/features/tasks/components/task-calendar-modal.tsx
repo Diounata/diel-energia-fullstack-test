@@ -1,11 +1,9 @@
 'use client'
 
-import { format } from 'date-fns'
-
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
+import timeGridPlugin from '@fullcalendar/timegrid'
 import ptBRLocale from '@fullcalendar/core/locales/pt-br'
-import { EventContentArg } from '@fullcalendar/core/index.js'
 
 import { Modal } from '@/components/ui/modal'
 
@@ -30,6 +28,10 @@ export function TaskCalendarModal() {
     <Modal isOpen={isCalendarOpen} setIsOpen={setIsOpen} className="w-[90%] h-[90%]">
       <FullCalendar
         events={events}
+        headerToolbar={{
+          left: 'title,prev,next',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay',
+        }}
         eventTimeFormat={{
           hour: 'numeric',
           minute: '2-digit',
@@ -38,20 +40,8 @@ export function TaskCalendarModal() {
         height="100%"
         initialView="dayGridMonth"
         locale={ptBRLocale}
-        plugins={[dayGridPlugin]}
+        plugins={[dayGridPlugin, timeGridPlugin]}
         selectable
-        eventContent={(arg: EventContentArg) => {
-          const startTime = arg.event.start ? format(arg.event.start, 'HH:mm') : ''
-          const endTime = arg.event.end ? format(arg.event.end, 'HH:mm') : ''
-
-          return (
-            <div className={`flex flex-col justify-between gap-1 h-full w-full px-2 py-1 bg-[#1768ff4b]`}>
-              <b>{arg.event.title}</b>
-
-              <p>{!endTime ? startTime : `${startTime} - ${endTime}`}</p>
-            </div>
-          )
-        }}
       />
     </Modal>
   )
