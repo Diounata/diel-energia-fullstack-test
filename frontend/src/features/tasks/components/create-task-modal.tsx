@@ -7,11 +7,11 @@ import { useCreateTask } from '../hooks/create'
 import { useSearchParamsManager } from '@/lib/hooks/useSearchParams'
 
 export function CreateTaskModal() {
-  const { searchParams, toggleSearchParam } = useSearchParamsManager()
+  const { searchParams, removeSearchParam } = useSearchParamsManager()
   const { createTaskForm, onSubmit } = useCreateTask()
 
   const isCreatingTask = searchParams.get('modal') === 'create-task'
-  const setIsOpen = () => toggleSearchParam('modal', 'create-task')
+  const setIsOpen = () => removeSearchParam('modal')
 
   return (
     <Modal isOpen={isCreatingTask} setIsOpen={setIsOpen}>

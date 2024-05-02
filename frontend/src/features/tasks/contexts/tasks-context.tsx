@@ -3,6 +3,7 @@ import axios from '../../../lib/api/axios-instance'
 import toast from 'react-hot-toast'
 
 import type { Task } from '../types/task'
+import type { PartialWithId } from '@/lib/types/partial-with-id'
 import type { WithoutId } from '@/lib/types/without-id'
 
 interface Children {
@@ -11,7 +12,9 @@ interface Children {
 
 interface Props {
   tasks: Task[]
+  getTask(id: string): Task | null
   createTask(task: WithoutId<Task>): Promise<string>
+  updateTask(task: PartialWithId<Task>): Promise<string>
 }
 
 const TasksContext = createContext({} as Props)
@@ -29,6 +32,13 @@ export function TasksProvider({ children }: Children) {
     }
   }, [])
 
+  const getTask = useCallback(
+    (id: string) => {
+      return tasks.find(task => task.id === id) ?? null
+    },
+    [tasks]
+  )
+
   const createTask = useCallback(
     async (task: WithoutId<Task>) => {
       try {
@@ -45,6 +55,26 @@ export function TasksProvider({ children }: Children) {
     [setTasks]
   )
 
+  const updateTask = useCallback(
+    async (task: PartialWithId<Task>) => {
+      try {
+        const id = (await axios.put<string>('/tasks', task)).data
+
+        const updatedTasks = tasks.map(currentTask =>
+          currentTask.id === id ? { ...currentTask, ...task } : currentTask
+        )
+
+        setTasks(updatedTasks)
+
+        return id
+      } catch (e) {
+        console.log(e)
+        return ''
+      }
+    },
+    [tasks]
+  )
+
   useEffect(() => {
     toast.promise(getAllTasks(), {
       loading: 'Carregando tarefas...',
@@ -56,9 +86,11 @@ export function TasksProvider({ children }: Children) {
   const value = useMemo(
     () => ({
       tasks,
+      getTask,
       createTask,
+      updateTask,
     }),
-    [tasks, createTask]
+    [tasks, getTask, createTask, updateTask]
   )
 
   return <TasksContext.Provider value={value}>{children}</TasksContext.Provider>

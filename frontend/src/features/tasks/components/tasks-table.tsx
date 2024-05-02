@@ -4,9 +4,11 @@ import { format } from 'date-fns'
 import { TextButton } from '@/components/ui/text-button'
 
 import { useTasks } from '../contexts/tasks-context'
+import { useSearchParamsManager } from '@/lib/hooks/useSearchParams'
 
 export function TasksTable() {
   const { tasks } = useTasks()
+  const { addSearchParam } = useSearchParamsManager()
 
   return (
     <table className="bg-white rounded-xl shadow-md w-full">
@@ -30,7 +32,12 @@ export function TasksTable() {
             <td className="flex items-center">{format(new Date(task.startsAt), "dd/MM/yyyy 'às' HH:mm")}</td>
             <td className="flex items-center">{format(new Date(task.endsAt), "dd/MM/yyyy 'às' HH:mm")}</td>
             <td className="flex items-center gap-4">
-              <TextButton>
+              <TextButton
+                onClick={() => {
+                  addSearchParam('modal', 'update-task')
+                  addSearchParam('id', task.id)
+                }}
+              >
                 <Image src="/edit.svg" alt="Edit" width={18} height={16} /> Editar
               </TextButton>
 
