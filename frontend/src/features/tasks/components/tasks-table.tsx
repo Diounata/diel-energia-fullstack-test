@@ -12,12 +12,12 @@ export function TasksTable() {
     <table className="bg-white rounded-xl shadow-md w-full">
       <thead>
         <tr className="px-5 py-7 text-lg">
-          <th className="text-center opacity-50">#</th>
-          <th>Título</th>
-          <th>Descrição</th>
-          <th>Data de início</th>
-          <th>Data de término</th>
-          <th>Ações</th>
+          <th className="text-center opacity-50 font-semibold">#</th>
+          <th className="font-semibold">Título</th>
+          <th className="font-semibold">Descrição</th>
+          <th className="font-semibold">Data de início</th>
+          <th className="font-semibold">Data de término</th>
+          <th className="font-semibold">Ações</th>
         </tr>
       </thead>
 

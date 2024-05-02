@@ -1,5 +1,6 @@
-import { createContext, useContext, useMemo, ReactNode, useState, useCallback } from 'react'
+import { createContext, useContext, useMemo, ReactNode, useState, useCallback, useEffect } from 'react'
 import axios from '../../../lib/api/axios-instance'
+import toast from 'react-hot-toast'
 
 import type { Task } from '../types/task'
 import type { WithoutId } from '@/lib/types/without-id'
@@ -16,15 +17,17 @@ interface Props {
 const TasksContext = createContext({} as Props)
 
 export function TasksProvider({ children }: Children) {
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      id: '1',
-      title: 'Title',
-      description: 'Description',
-      startsAt: '2022-01-01T00:00:00Z',
-      endsAt: '2022-01-01T00:00:00Z',
-    },
-  ])
+  const [tasks, setTasks] = useState<Task[]>([])
+
+  const getAllTasks = useCallback(async () => {
+    try {
+      const tasks = (await axios.get<Task[]>('/tasks')).data
+
+      setTasks(tasks)
+    } catch (e) {
+      console.log(e)
+    }
+  }, [])
 
   const createTask = useCallback(
     async (task: WithoutId<Task>) => {
@@ -41,6 +44,14 @@ export function TasksProvider({ children }: Children) {
     },
     [setTasks]
   )
+
+  useEffect(() => {
+    toast.promise(getAllTasks(), {
+      loading: 'Carregando tarefas...',
+      success: 'Tarefas carregadas!',
+      error: 'Erro ao carregar as tarefas',
+    })
+  }, [])
 
   const value = useMemo(
     () => ({

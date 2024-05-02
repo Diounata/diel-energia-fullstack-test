@@ -8,7 +8,8 @@ interface Props extends PropsWithChildren {
 }
 
 export function Modal({ isOpen, setIsOpen, children }: Props) {
-  document.getElementsByTagName('body')[0].style.overflow = isOpen ? 'hidden' : 'auto'
+  if (typeof window !== 'undefined')
+    document.getElementsByTagName('body')[0].style.overflow = isOpen ? 'hidden' : 'auto'
 
   return (
     <div
@@ -17,7 +18,9 @@ export function Modal({ isOpen, setIsOpen, children }: Props) {
       } w-screen h-screen absolute z-20`}
     >
       <div className="w-full h-full bg-[#00000050] cursor-pointer fixed" onClick={() => setIsOpen()} />
-      <div className="min-h-[13.5rem] max-h-[90%] p-7 mx-4 bg-white rounded-lg w-[30.875rem] z-30 overflow-auto">{children}</div>
+      <div className="min-h-[13.5rem] max-h-[90%] p-7 mx-4 bg-white rounded-lg w-[30.875rem] z-30 overflow-auto">
+        {children}
+      </div>
     </div>
   )
 }
