@@ -3,13 +3,11 @@ import { format } from 'date-fns'
 
 import { TextButton } from '@/components/ui/text-button'
 
-import type { Task } from '../types/task'
+import { useTasks } from '../contexts/tasks-context'
 
-interface Props {
-  tasks: Task[]
-}
+export function TasksTable() {
+  const { tasks } = useTasks()
 
-export function TasksTable({ tasks }: Props) {
   return (
     <table className="bg-white rounded-xl shadow-md w-full">
       <thead>

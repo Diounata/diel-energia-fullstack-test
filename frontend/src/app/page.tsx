@@ -1,30 +1,30 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { CreateTaskModal } from '@/features/tasks/components/create-task-modal'
 import { TasksTable } from '@/features/tasks/components/tasks-table'
+import { TasksProvider } from '@/features/tasks/contexts/tasks-context'
+
+import { useSearchParamsManager } from '@/lib/hooks/useSearchParams'
 
 export default function Home() {
-  const tasks = [
-    {
-      id: '1',
-      title: 'Title',
-      description: 'Description',
-      startsAt: '2022-01-01T00:00:00Z',
-      endsAt: '2022-01-01T00:00:00Z',
-    },
-  ]
+  const { toggleSearchParam } = useSearchParamsManager()
 
   return (
-    <div className="flex flex-col gap-9">
-      <header className="flex items-center justify-between">
-        <h1 className="text-xl font-medium md:text-3xl">Tarefas (0)</h1>
+    <TasksProvider>
+      <div className="flex flex-col gap-9">
+        <header className="flex items-center justify-between">
+          <h1 className="text-xl font-medium md:text-3xl">Tarefas (0)</h1>
 
-        <Button>+ Novo</Button>
-      </header>
+          <Button onClick={() => toggleSearchParam('modal', 'create-task')}>+ Novo</Button>
+        </header>
 
-      <main>
-        <TasksTable tasks={tasks} />
-      </main>
-    </div>
+        <main>
+          <TasksTable />
+
+          <CreateTaskModal />
+        </main>
+      </div>
+    </TasksProvider>
   )
 }
