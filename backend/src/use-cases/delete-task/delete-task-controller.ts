@@ -17,7 +17,7 @@ export class DeleteTaskController {
 
       await this.deleteTaskUseCase.handle(id)
 
-      return reply.status(200).send(`${id} deleted`)
+      return reply.status(200).send(id)
     } catch (e) {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         return reply.status(400).send({
