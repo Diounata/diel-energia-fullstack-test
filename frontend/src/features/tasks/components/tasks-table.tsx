@@ -20,7 +20,7 @@ export function TasksTable() {
     <table className="bg-white rounded-xl shadow-md w-full task-table">
       <thead>
         <tr className="px-5 py-7 text-lg">
-          <th className="text-center opacity-50 font-semibold">#</th>
+          <th className="opacity-50 font-semibold">#</th>
           <th className="font-semibold">Título</th>
           <th className="font-semibold">Descrição</th>
           <th className="font-semibold">Data de início</th>

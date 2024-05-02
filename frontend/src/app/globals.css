@@ -12,6 +12,10 @@
   text-align: start;
 }
 
+.task-table th:first-of-type {
+  text-align: center;
+}
+
 .task-table tr {
   display: grid;
   grid-template-columns: 1fr 2fr 2fr 3fr 2fr 2fr;
