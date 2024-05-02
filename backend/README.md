@@ -1,4 +1,4 @@
-<h1 align='center'> Teste full stack – Diel Energia (frontend) </h1>
+<h1 align='center'> Teste full stack – Diel Energia (backend) </h1>
 
 
 <p align='center'>
@@ -7,27 +7,19 @@
  
 ## :books: Tecnologias
 
-O frontend foi feito utilizando as seguintes tecnologias:
+O backend foi feito utilizando as seguintes tecnologias:
 
-- [Axios](https://axios-http.com/)
 - [date-fns](https://date-fns.org/)
-- [Fullcalendar](https://fullcalendar.io/)
-- [Next.js](https://nextjs.org/)
-- [React.js](https://reactjs.org/)
-- [React-hook-form](https://react-hook-form.com/)
-- [React-hot-toast](https://react-hot-toast.com/)
-- [TailwindCSS](https://tailwindcss.com/)
+- [Fastify](https://fastify.dev/)
+- [Prisma](https://www.prisma.io/)
 - [Typescript](https://www.typescriptlang.org/)
+- [Vitest](https://vitest.dev/)
 - [Zod](https://zod.dev/)
 
 ## :performing_arts: Features
 
-- Tarefas:
-  - Criação, edição e remoção por meio de modal
-  - Filtro dinâmico por título
-  - Visualização por meio de:
-    - Tabela
-    - Calendário, por meio de mês, semana e dia
+- Uso de princípios SOLID no desenvolvimento de features
+- TDD
 
 ## :gear: Como usar
 
@@ -41,11 +33,10 @@ $ git clone https://github.com/Diounata/diel-energia-fullstack-test
 # Ir até a pasta do repositório
 $ cd diel-energia-fullstack-test
 
-# Instalar dependências e executar a aplicação (frontend) 
-# Certifique-se da aplicação backend (./backend) estar sendo executada
-$ cd frontend
+# Instalar dependências e executar a aplicação (backend)
+$ cd backend
 $ npm install
-$ npm run dev # (localhost:3000)
+$ npm run dev # (localhost:4000)
 ```
 
 ## :balance_scale: Licença
