@@ -18,6 +18,7 @@ O backend foi feito utilizando as seguintes tecnologias:
 
 ## :performing_arts: Features
 
+- Persistência dos dados usando SQLite (Prisma)
 - Uso de princípios SOLID no desenvolvimento de features
 - TDD
 
